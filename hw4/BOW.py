@@ -73,13 +73,10 @@ for j in dic:
 
 
 ## Bag of Words(BOW)
-X_train_bow = []
-X_test_bow = []
+X_train_bow = np.zeros((len(X_train), len(dic_final)))
+X_test_bow = np.zeros((len(X_test), len(dic_final)))
 #print([ind for ind, v in enumerate(X_train[0]) if v=='are'])
 for i in range(len(X_train)):
-  X_train_bow.append([])
-  for cnt in range(len(dic_final)):
-    X_train_bow[i].append(0)
   for j in range(len(X_train[i])):
     if X_train[i][j] in dic_final:
       index = int(dic_final[X_train[i][j]])-1
@@ -87,14 +84,13 @@ for i in range(len(X_train)):
 
      
 for i in range(len(X_test)):
-  X_test_bow.append([])
-  for cnt in range(len(dic_final)):
-    X_test_bow[i].append(0)
   for j in range(len(X_test[i])):
     if X_test[i][j] in dic_final:
       X_test_bow[i][int(dic_final[X_test[i][j]])-1] += 1
 
-
+#print(dic_final)
+#print(X_train)
+#print(X_train_bow)
  
 #X_train = sequence.pad_sequences(X_train, maxlen = 100)      
 #X_test = sequence.pad_sequences(X_test, maxlen = 100)      
