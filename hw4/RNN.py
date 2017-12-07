@@ -17,8 +17,8 @@ Y_train = []
 cnt_train = 0
 cnt_test = 0
 
-train_data = "/home/xpoint/ML2017FALL/hw4/training_label.txt"
-test_data = "/home/xpoint/ML2017FALL/hw4/testing_data.txt"
+train_data = "/home/yao/workspace/ML_data/hw4/training_label.txt"
+test_data = "/home/yao/workspace/ML_data/hw4/testing_data.txt"
 prediction_data = "prediction.csv"
 
 
