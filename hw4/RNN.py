@@ -2,8 +2,10 @@ import numpy as np
 import collections
 import sys
 import csv
+import keras
+from keras import initializers
 from keras.models import Sequential, load_model
-from keras.layers import Dense, Embedding, LSTM
+from keras.layers import Dense, Dropout, Embedding, LSTM, Bidirectional
 from keras.preprocessing import sequence
 
 test = []
@@ -80,8 +82,10 @@ X_test = sequence.pad_sequences(X_test, maxlen = 80)
 #print(X_train)
 
 model = Sequential()
-model.add(Embedding(len(dic), 128))
-model.add(LSTM(128, dropout = 0.2, recurrent_dropout=0.3))
+model.add(Embedding(len(dic), 256, embeddings_initializer=initializers.random_normal(stddev=1)))
+#model.add(LSTM(128),dropout=0.3, recurrent_dropout=0.2)
+model.add(Bidirectional(LSTM(256, dropout=0.3, recurrent_dropout=0.2, return_sequences=True)))
+model.add(Bidirectional(LSTM(256, dropout=0.3, recurrent_dropout=0.2)))
 model.add(Dense(units=1, activation='sigmoid'))
 
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
