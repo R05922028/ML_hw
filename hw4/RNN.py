@@ -7,6 +7,7 @@ from keras import initializers
 from keras.models import Sequential, load_model
 from keras.layers import Dense, Dropout, Embedding, LSTM, Bidirectional
 from keras.preprocessing import sequence
+from keras.callbacks import EarlyStopping
 
 test = []
 ID_test = []
@@ -16,8 +17,8 @@ Y_train = []
 cnt_train = 0
 cnt_test = 0
 
-train_data = "/home/yao/workspace/ML_data/hw4/training_label.txt"
-test_data = "/home/yao/workspace/ML_data/hw4/testing_data.txt"
+train_data = "/home/xpoint/ML2017FALL/hw4/training_label.txt"
+test_data = "/home/xpoint/ML2017FALL/hw4/testing_data.txt"
 prediction_data = "prediction.csv"
 
 
@@ -77,8 +78,8 @@ for i in range(len(X_test)):
       X_test[i][j] = 0
 
  
-X_train = sequence.pad_sequences(X_train, maxlen = 80)      
-X_test = sequence.pad_sequences(X_test, maxlen = 80)      
+X_train = sequence.pad_sequences(X_train, maxlen = 100)      
+X_test = sequence.pad_sequences(X_test, maxlen = 100)      
 #print(X_train)
 
 model = Sequential()
@@ -87,9 +88,10 @@ model.add(Embedding(len(dic), 256, embeddings_initializer=initializers.random_no
 model.add(Bidirectional(LSTM(256, dropout=0.3, recurrent_dropout=0.2, return_sequences=True)))
 model.add(Bidirectional(LSTM(256, dropout=0.3, recurrent_dropout=0.2)))
 model.add(Dense(units=1, activation='sigmoid'))
+earlystop = EarlyStopping(monitor='val_acc', patience=1, verbose=1, mode='max')
 
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-model.fit(X_train, Y_train, batch_size=128, epochs=3, validation_split = 0.1)
+model.fit(X_train, Y_train, batch_size=128, epochs=4, validation_split = 0.1, callbacks=[earlystop])
 
 model.save('model.h5')
 
