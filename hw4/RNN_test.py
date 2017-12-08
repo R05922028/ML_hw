@@ -3,6 +3,7 @@ import collections
 import sys
 import csv
 import keras
+import json
 from keras import initializers
 from keras.models import Sequential, load_model
 from keras.layers import Dense, Dropout, Embedding, LSTM, Bidirectional
@@ -17,13 +18,13 @@ Y_train = []
 cnt_train = 0
 cnt_test = 0
 
-train_data = "/home/yao/workspace/ML_data/hw4/training_label.txt"
+#train_data = "training_label.txt"
 #test_data = "/home/yao/workspace/ML_data/hw4/testing_data.txt"
 #prediction_data = "prediction.csv"
 test_data = sys.argv[1]
 prediction_data = sys.argv[2]
 
-
+'''
 ## Read Train Data
 fin = open(train_data, 'r')
 for line in fin:
@@ -37,7 +38,7 @@ for line in fin:
 #print(X_trailabel)
 #print(Y_train[0])
 fin.close()
-
+'''
 ## Read Test Data
 fin = open(test_data, 'r')
 for line in fin:
@@ -57,6 +58,7 @@ fin.close()
 
 ## Build Dictionary
 dic = {}    # Dictionary 
+'''
 word_index = 1
 for i in range(len(X_train)):
   for j in range(len(X_train[i])):
@@ -64,8 +66,10 @@ for i in range(len(X_train)):
       dic[X_train[i][j]] = word_index
       word_index = word_index + 1
 #print(dic)
-
-
+'''
+with open('dic.txt', 'r') as f:
+  dic = json.load(f)
+print(dic)
 ## Bag of Words(BOW)
 '''
 #print([ind for ind, v in enumerate(X_train[0]) if v=='dfsda'])

@@ -3,6 +3,7 @@ import collections
 import sys
 import csv
 import keras
+import json
 from keras import initializers
 from keras.models import Sequential, load_model
 from keras.layers import Dense, Dropout, Embedding, LSTM, Bidirectional
@@ -65,6 +66,8 @@ for i in range(len(X_train)):
       dic[X_train[i][j]] = word_index
       word_index = word_index + 1
 #print(dic)
+with open('dic.txt', 'w') as f:
+  json.dump(dic, f)
 
 
 ## Bag of Words(BOW)
