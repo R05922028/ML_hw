@@ -69,7 +69,6 @@ for i in range(len(X_train)):
 '''
 with open('dic.txt', 'r') as f:
   dic = json.load(f)
-print(dic)
 ## Bag of Words(BOW)
 '''
 #print([ind for ind, v in enumerate(X_train[0]) if v=='dfsda'])
