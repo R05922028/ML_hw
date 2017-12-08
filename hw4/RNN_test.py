@@ -17,12 +17,11 @@ Y_train = []
 cnt_train = 0
 cnt_test = 0
 
-#train_data = "/home/yao/workspace/ML_data/hw4/training_label.txt"
+train_data = "/home/yao/workspace/ML_data/hw4/training_label.txt"
 #test_data = "/home/yao/workspace/ML_data/hw4/testing_data.txt"
 #prediction_data = "prediction.csv"
-#test_data = sys.argv[1]
-train_data= sys.argv[1]
-#prediction_data = sys.argv[2]
+test_data = sys.argv[1]
+prediction_data = sys.argv[2]
 
 
 ## Read Train Data
@@ -38,7 +37,7 @@ for line in fin:
 #print(X_trailabel)
 #print(Y_train[0])
 fin.close()
-'''
+
 ## Read Test Data
 fin = open(test_data, 'r')
 for line in fin:
@@ -55,7 +54,7 @@ X_test = X_test[1:]
 #print(ID_test)
 #print(X_test)
 fin.close()
-'''
+
 ## Build Dictionary
 dic = {}    # Dictionary 
 word_index = 1
@@ -68,7 +67,7 @@ for i in range(len(X_train)):
 
 
 ## Bag of Words(BOW)
-
+'''
 #print([ind for ind, v in enumerate(X_train[0]) if v=='dfsda'])
 for i in range(len(X_train)):
   for j in range(len(X_train[i])):
@@ -81,12 +80,12 @@ for i in range(len(X_test)):
       X_test[i][j] = dic[X_test[i][j]]
     else:
       X_test[i][j] = 0
-'''
- 
-X_train = sequence.pad_sequences(X_train, maxlen = 100)      
-#X_test = sequence.pad_sequences(X_test, maxlen = 100)      
-#print(X_train)
 
+ 
+#X_train = sequence.pad_sequences(X_train, maxlen = 100)      
+X_test = sequence.pad_sequences(X_test, maxlen = 100)      
+#print(X_train)
+'''
 model = Sequential()
 model.add(Embedding(len(dic), 256, embeddings_initializer=initializers.random_normal(stddev=1)))
 #model.add(LSTM(128),dropout=0.3, recurrent_dropout=0.2)
@@ -118,4 +117,3 @@ fout.write('id,label\n')
 for x in range(len(ans)):
     fout.write(str(x)+','+str(ans[x])+'\n')
 fout.close()
-'''

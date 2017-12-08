@@ -108,7 +108,7 @@ model = load_model('model.h5')
 prediction = model.predict(X_train_semi)
 #Testing
 for x in range(len(X_train_semi)):                                               
-  if prediction[x]>=0.5:
+  if prediction[x]>=0.8:
     Y_train_semi.append(1)
   else:
     Y_train_semi.append(0)
