@@ -18,12 +18,14 @@ ranting = []
 num_users = 6040
 num_movies = 3952
 
-train_data= sys.argv[1]
-test_data= sys.argv[2]
-prediction_data= sys.argv[3]
-
+#train_data= sys.argv[1]
+test_data= sys.argv[1]
+prediction_data= sys.argv[2]
+movies_csv = sys.argv[3]
+users_csv = sys.argv[4]
+'''
 ## Read Train Data
-fin = pd.read_csv(train_data)
+fin = pd.read_csv('train.csv')
 fin = fin.values
 np.random.shuffle(fin)
 for i in range(len(fin)):
@@ -33,7 +35,7 @@ for i in range(len(fin)):
 user_ID = np.array(user_ID)
 movie_ID = np.array(movie_ID)
 ranting = np.array(ranting)
-
+'''
 ## Read Test Data
 fin = open(test_data, 'r')
 for line in fin:
@@ -43,12 +45,12 @@ for line in fin:
 fin.close()
 user_ID_test = np.array(user_ID_test[1:])
 movie_ID_test = np.array(movie_ID_test[1:])
-
+'''
 ## normalize
 mean = np.mean(ranting)
 dev = np.std(ranting)
 ranting = (ranting-mean) / dev
-
+'''
 '''
 UID = []
 Gender = []
@@ -91,6 +93,7 @@ Title = np.array(Title[1:])
 Genres = np.array(Genres[1:])
 print(Title[0])
 '''
+'''
 latent_dim = 16
 
 users = Input(shape=[1])
@@ -121,11 +124,11 @@ early_stopping = EarlyStopping(monitor='val_loss', patience=1, verbose=1)
  
 model.fit([user_ID, movie_ID],ranting,epochs=100,batch_size=256, validation_split =0.01,verbose=1, callbacks=[early_stopping])
 model.save('model_hw5_mf.h5')
-
+'''
 model = load_model('model_hw5_mf.h5')
 prediction = model.predict([user_ID_test, movie_ID_test], batch_size=256)
 ##normalize
-prediction = prediction * dev + mean
+#prediction = prediction * dev + mean
 fout = open(prediction_data,'w')
 fout.write('TestDataID,Rating\n')
 for x in range(len(prediction)):

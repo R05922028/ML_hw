@@ -16,13 +16,13 @@ movie_ID = []
 movie_ID_test = []
 ranting = []
 
-train_data= sys.argv[1]
-test_data= sys.argv[2]
-prediction_data= sys.argv[3]
-
-
+test_data= sys.argv[1]
+prediction_data= sys.argv[2]
+movies_csv = sys.argv[3]
+users_csv = sys.argv[4]
+'''
 ## Read Train Data
-fin = open(train_data, 'r')
+fin = open('train.csv', 'r')
 for line in fin:
   split = line.split(',')
   user_ID.append([split[1]])
@@ -32,7 +32,7 @@ fin.close()
 user_ID = np.array(user_ID[1:])
 movie_ID = np.array(movie_ID[1:])
 ranting = np.array(ranting[1:])
-
+'''
 ## Read Test Data
 fin = open(test_data, 'r')
 for line in fin:
@@ -86,7 +86,6 @@ print(Title[0])
 '''
 num_users = 6040
 num_movies = 3952
-
 '''
 users = Input(shape=[1])
 movies = Input(shape=[1])
@@ -120,4 +119,3 @@ fout.write('TestDataID,Rating\n')
 for x in range(len(prediction)):
   fout.write(str(x+1)+','+str(prediction[x][0])+'\n')
 fout.close()
-  
