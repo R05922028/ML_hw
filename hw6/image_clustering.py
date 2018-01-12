@@ -1,11 +1,13 @@
 import numpy as np
 import pandas as pd
+from sklearn.manifold import TSNE
 import sys
 from keras.callbacks import EarlyStopping, ModelCheckpoint
 from sklearn.decomposition import PCA
 from keras.layers import Input, Dense, Convolution2D, MaxPooling2D, UpSampling2D
 from keras.models import Model, load_model
 from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
 
 image_data = sys.argv[1]
 image = np.load(image_data)
@@ -54,13 +56,24 @@ predict_data = sys.argv[3]
 fout = open(predict_data,'w')
 fout.write("ID,Ans\n")
 for idx, i1, i2 in zip(IDs, image_1, image_2):
-	p1 = kmeans.labels_[i1]
-	p2 = kmeans.labels_[i2]
-	if p1 == p2:
-		pred = 1
-	else:
-		pred = 0
-	fout.write("{},{}\n".format(idx, pred))
+  p1 = kmeans.labels_[i1]
+  p2 = kmeans.labels_[i2]
+  if p1 == p2:
+    pred = 1
+  else:
+    pred = 0
+  fout.write("{},{}\n".format(idx, pred))
 fout.close()
-
-
+'''
+label = []
+for i in range(5000):
+  label.append(0)
+for i in range(5000):
+  label.append(1)
+visual = TSNE(n_components=2).fit_transform(image_en)
+v_x = visual[:,0]
+v_y = visual[:,1]
+cm = plt.cm.get_cmap('RdBu')
+plt.scatter(v_x,v_y,c=label,cmap=cm)
+plt.savefig('label.png')
+'''

@@ -22,11 +22,11 @@ image = np.array(image)
 img_mean = image.mean(axis=0)
 io.imsave('img_mean.jpg', np.reshape(img_mean, (600,600,3)).astype(np.uint8))
 
-#U, s, V = np.linalg.svd(np.transpose(image-img_mean), full_matrices=False)
+U, s, V = np.linalg.svd(np.transpose(image-img_mean), full_matrices=False)
 
-#np.save('U.npy', U)
-#np.save('s.npy', s)
-#np.save('V.npy', V)
+np.save('U.npy', U)
+np.save('s.npy', s)
+np.save('V.npy', V)
 
 U = np.load('U.npy')
 s = np.load('s.npy')
